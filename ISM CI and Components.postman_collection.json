@@ -1,0 +1,216 @@
+{
+	"info": {
+		"_postman_id": "9ece2543-149c-4be3-98ad-22a524f78a1a",
+		"name": "ISM CI and Components",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Post Data Copy",
+			"item": [
+				{
+					"name": "New CI Computer",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", () => {\r",
+									"  pm.expect(pm.response.code).to.be.oneOf([201,202]);\r",
+									"});\r",
+									"\r",
+									"const responseJson = pm.response.json();\r",
+									"pm.test(\"Body contains string\",() => {\r",
+									"  pm.expect(pm.response.text()).to.include(\"RecId\");\r",
+									"});\r",
+									"\r",
+									"var jsonData = JSON.parse(responseBody);\r",
+									"postman.setEnvironmentVariable(\"ciRecId\", jsonData.RecId);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{authToken}}",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "Authorization",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Name\": \"ARTest-Postman\",\r\n    \"Status\": \"Production\",\r\n    \"OrgUnitLink\": \"43BBA1E9AF9A4345973C295FB14AC432\",\r\n    \"CPUName\": \"Intel(R) Core(TM) i7-3740QM CPU @ 2.70GHz\",\r\n    \"SerialNumber\": \"PK2ECNT1\",\r\n    \"IPAddress\": \"10.2.32.29\",\r\n    \"Subnet\": \"255.255.255.0\",\r\n    \"MACAddress\": \"3C970EE291C8\",\r\n    \"FullyQualifiedDomainName\": \"ARTest-Postman.demo.comzzz\",\r\n    \"DomainName\": \"demo.comzzz\",\r\n    \"Model\": \"Super Computer\",\r\n    \"TotalMemory\": \"128\",\r\n    \"TotalMemoryUnit\": \"GB\",\r\n    \"LoginName\": \"AlasdairR\",\r\n    \"OperatingSystem\": \"Windows 11\",\r\n    \"LastAuditDateTime\": \"11/30/2021 10:13\",\r\n    \"TotalMemory\": \"8\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{URL}}/api/odata/businessobject/ci__computers",
+							"protocol": "https",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"odata",
+								"businessobject",
+								"ci__computers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Insert CI component",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", () => {\r",
+									"  pm.expect(pm.response.code).to.be.oneOf([201,202]);\r",
+									"});\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{authToken}}",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "Authorization",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ParentLink\": \"{{ciRecId}}\",\r\n    \"MemorySize\":\"8\",\r\n    \"MemoryType\":\"DDR4\",\r\n    \"SlotNumber\":\"1\",\r\n    \"DisplayName\":\"9905471\"\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{URL}}/api/odata/businessobject/frs_cicomponent__memorys",
+							"protocol": "https",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"odata",
+								"businessobject",
+								"frs_cicomponent__memorys"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update CI Computer",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", () => {\r",
+									"  pm.expect(pm.response.code).to.be.oneOf([201,200]);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{authToken}}",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "Authorization",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ManufacturerLink\": \"7BFB579E036F45AFAB63E2E08B3AE2FD\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{URL}}/api/odata/businessobject/ci__computers('{{ciRecId}}')",
+							"protocol": "https",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"odata",
+								"businessobject",
+								"ci__computers('{{ciRecId}}')"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
